@@ -1,0 +1,909 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BA8901C8-45BA-4B54-A7AF-7C3DBDC186F6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>OPMS</RootNamespace>
+    <AssemblyName>OPMS</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;_DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\opms_logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-IIS|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug-IIS\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;DEBUGIIS</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'IIS|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\IIS\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;IIS</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.2\lib\net47\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="IdentityModel, Version=4.3.0.0, Culture=neutral, PublicKeyToken=e7877f4675df049f, processorArchitecture=MSIL">
+      <HintPath>..\packages\IdentityModel.4.3.0\lib\net472\IdentityModel.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.2.6.1513, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.6\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=3.1.3.1513, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.3.1.3\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.2\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="SautinSoft.HtmlToRtf, Version=7.4.4.30, Culture=neutral, PublicKeyToken=bce916f184012969, processorArchitecture=MSIL">
+      <HintPath>..\packages\sautinsoft.htmltortf.7.4.4.30\lib\net47\SautinSoft.HtmlToRtf.dll</HintPath>
+    </Reference>
+    <Reference Include="SautinSoft.RtfToHtml, Version=7.4.5.25, Culture=neutral, PublicKeyToken=c666a5e96a3d5457, processorArchitecture=MSIL">
+      <HintPath>..\packages\sautinsoft.rtftohtml.7.4.5.25\lib\net47\SautinSoft.RtfToHtml.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.7.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Behaviours\BindableSelectedItemBehavior.cs" />
+    <Compile Include="Behaviours\ValidationErrorMappingBehavior.cs" />
+    <Compile Include="Controls\CustomDataGrid.cs" />
+    <Compile Include="Controls\CustomRichTextBox.cs" />
+    <Compile Include="Controls\EditToolbar\EditToolbarButtonVisibilityStateModel.cs" />
+    <Compile Include="Controls\NavigationControl\NavToolbarButtonActiveStateModel.cs" />
+    <Compile Include="Controls\NavigationControl\NavToolbarButtonVisibilityStateModel.cs" />
+    <Compile Include="Controls\NavigationControl\INavigationlnteraction.cs" />
+    <Compile Include="Controls\NavigationControl\NavigationControl.xaml.cs">
+      <DependentUpon>NavigationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ProgressView\ProgressView.cs" />
+    <Compile Include="Controls\EditToolbar\EditToolbarButtonActiveStateModel.cs" />
+    <Compile Include="Controls\EditToolbar\EditToolbar.xaml.cs">
+      <DependentUpon>EditToolbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditToolbar\IEditToolBarInteraction.cs" />
+    <Compile Include="Controls\MoreOptionsMenu\IMoreMenuInteraction.cs" />
+    <Compile Include="Controls\MoreOptionsMenu\MoreOptionsMenu.xaml.cs">
+      <DependentUpon>MoreOptionsMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ToolbarView\ToolbarView.xaml.cs">
+      <DependentUpon>ToolbarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\EditToolbarModeToBool.cs" />
+    <Compile Include="Converters\InverseBoolConverter.cs" />
+    <Compile Include="Models\AckModel.cs" />
+    <Compile Include="Models\DataEntities\AccountHead.cs" />
+    <Compile Include="Models\DataEntities\Expenses.cs" />
+    <Compile Include="Models\DataEntities\ExpensesAccountHead.cs" />
+    <Compile Include="Models\DataEntities\FieldOptions.cs" />
+    <Compile Include="Models\DataEntities\Fields.cs" />
+    <Compile Include="Models\DataEntities\HdlBill.cs" />
+    <Compile Include="Models\DataEntities\HdlBillPayment.cs" />
+    <Compile Include="Models\DataEntities\MonthlyRateList.cs" />
+    <Compile Include="Models\DataEntities\OtherIncome.cs" />
+    <Compile Include="Models\DataEntities\PatientBill.cs" />
+    <Compile Include="Models\DataEntities\PatientBillPayment.cs" />
+    <Compile Include="Models\DataEntities\ReferringRateList.cs" />
+    <Compile Include="Models\DataEntities\SalaryPayment.cs" />
+    <Compile Include="Models\DataEntities\SpecializedLabRateList.cs" />
+    <Compile Include="Models\DataEntities\SpecializedLabSamples.cs" />
+    <Compile Include="Models\DhlRegistration\RateListModel.cs" />
+    <Compile Include="Models\Dto\HdlReferringCutModelDto.cs" />
+    <Compile Include="Models\Dto\PatientBillPaymentReportDto.cs" />
+    <Compile Include="Models\Dto\PatientRevenueModelDto.cs" />
+    <Compile Include="Models\Dto\PatientWithRateListTestCharges.cs" />
+    <Compile Include="Models\Dto\SpecializedLabModelDto.cs" />
+    <Compile Include="Models\Dto\SpecializedLabSampleDto.cs" />
+    <Compile Include="Models\Dto\TestTitleSelectionDto.cs" />
+    <Compile Include="Models\Report\BaseReportModel.cs" />
+    <Compile Include="Models\Report\HdlBillReportModel.cs" />
+    <Compile Include="Models\Report\PatientBillReportModel.cs" />
+    <Compile Include="Models\Report\PatientBillPaymentsReportModel.cs" />
+    <Compile Include="Models\Report\SpecializedLabOptionsModel.cs" />
+    <Compile Include="Models\Report\ReferringCutPaymentReportModel.cs" />
+    <Compile Include="Models\Report\PatientRevenueReportModel.cs" />
+    <Compile Include="Models\Report\SpecializedLabReportModel.cs" />
+    <Compile Include="Models\Request\PatientWithRateListChargesRequest.cs" />
+    <Compile Include="Models\Response\AbbrevationsResponseModel.cs" />
+    <Compile Include="Models\Response\AddTestTitlesInGoupResponseModel.cs" />
+    <Compile Include="Models\Response\BillResponseModel.cs" />
+    <Compile Include="Models\Response\DealersResponseModel.cs" />
+    <Compile Include="Models\Response\DhlRegistrationResponseModel.cs" />
+    <Compile Include="Models\Response\EmployeeResponseModel.cs" />
+    <Compile Include="Models\Response\ExpensesResponseModel.cs" />
+    <Compile Include="Models\Response\FieldOptionsResponseModel.cs" />
+    <Compile Include="Models\Response\HdlBillPaymentResponseModel.cs" />
+    <Compile Include="Models\Response\HdlBillResponseModel.cs" />
+    <Compile Include="Models\Response\HdlReferringCutReportResponseModel.cs" />
+    <Compile Include="Models\Response\InventoryResponseModel.cs" />
+    <Compile Include="Models\Response\OtherIncomeResponseModel.cs" />
+    <Compile Include="Models\Response\PatientBillPaymentReportResponeModel.cs" />
+    <Compile Include="Models\Response\PatientBillPaymentResponseModel.cs" />
+    <Compile Include="Models\Response\PatientRevenueReportResponseModel.cs" />
+    <Compile Include="Models\Response\PatientTestResponseModel.cs" />
+    <Compile Include="Models\Response\RateListResponseModel.cs" />
+    <Compile Include="Models\Response\ReagentEntryResponseModel.cs" />
+    <Compile Include="Models\Response\SalaryPaymentResponseModel.cs" />
+    <Compile Include="Models\Response\SalaryResponseModel.cs" />
+    <Compile Include="Models\Response\SignatureResponseModel.cs" />
+    <Compile Include="Models\Response\SpecializedLabReportResponseModel.cs" />
+    <Compile Include="Models\Response\TestResultsResponseModel.cs" />
+    <Compile Include="Models\SelectWindowDataModel.cs" />
+    <Compile Include="Models\DataEntities\Abbrevations.cs" />
+    <Compile Include="Models\DataEntities\Addresses.cs" />
+    <Compile Include="Models\DataEntities\BaseEntity.cs" />
+    <Compile Include="Models\DataEntities\CivilStatuses.cs" />
+    <Compile Include="Models\DataEntities\Dealers.cs" />
+    <Compile Include="Models\DataEntities\EmployeeCategories.cs" />
+    <Compile Include="Models\DataEntities\EmployeeRoles.cs" />
+    <Compile Include="Models\DataEntities\Employees.cs" />
+    <Compile Include="Models\DataEntities\Formulas.cs" />
+    <Compile Include="Models\DataEntities\Genders.cs" />
+    <Compile Include="Models\DataEntities\HdlRegistration.cs" />
+    <Compile Include="Models\DataEntities\Initials.cs" />
+    <Compile Include="Models\DataEntities\Inventories.cs" />
+    <Compile Include="Models\DataEntities\Occupations.cs" />
+    <Compile Include="Models\DataEntities\OtherTests.cs" />
+    <Compile Include="Models\DataEntities\Patient.cs" />
+    <Compile Include="Models\DataEntities\ReagentBillEntries.cs" />
+    <Compile Include="Models\DataEntities\Reagents.cs" />
+    <Compile Include="Models\DataEntities\RegistrationCategories.cs" />
+    <Compile Include="Models\DataEntities\RegistrationTypes.cs" />
+    <Compile Include="Models\DataEntities\RoleTypes.cs" />
+    <Compile Include="Models\DataEntities\Salary.cs" />
+    <Compile Include="Models\DataEntities\SignaturePrototypes.cs" />
+    <Compile Include="Models\DataEntities\TestGroups.cs" />
+    <Compile Include="Models\DataEntities\TestReagentRelation.cs" />
+    <Compile Include="Models\DataEntities\TestResults.cs" />
+    <Compile Include="Models\DataEntities\TestResultsView.cs" />
+    <Compile Include="Models\DataEntities\TestTitles.cs" />
+    <Compile Include="Models\DataEntities\UserRights.cs" />
+    <Compile Include="Models\DataEntities\Users.cs" />
+    <Compile Include="Models\Patient\PatientDto.cs" />
+    <Compile Include="Models\Patient\PatientResponseModel.cs" />
+    <Compile Include="Models\Reagent\ReagentResponseModel.cs" />
+    <Compile Include="Models\ReportPrintingOptionsModel.cs" />
+    <Compile Include="Models\Report\TestResultsReportModel.cs" />
+    <Compile Include="Models\Test\FormulasResponseModel.cs" />
+    <Compile Include="Models\Test\OtherTestDto.cs" />
+    <Compile Include="Models\Dto\RoleTypeDto.cs" />
+    <Compile Include="Models\Test\TestGroupDto.cs" />
+    <Compile Include="Models\Test\TestComboListTypeDto.cs" />
+    <Compile Include="Models\Test\TestResponseModel.cs" />
+    <Compile Include="Models\Test\TestTitleDto.cs" />
+    <Compile Include="Models\User\UsersDto.cs" />
+    <Compile Include="Models\ErrorModel.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
+    <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\User\LoginModel.cs" />
+    <Compile Include="Models\User\UserListModel.cs" />
+    <Compile Include="Models\User\UserListResponseModel.cs" />
+    <Compile Include="Properties\Numbers.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Numbers.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\ReportPrintingOptions.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>ReportPrintingOptions.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Services\Finance\FinanceService.cs" />
+    <Compile Include="Services\Finance\IFinanceService.cs" />
+    <Compile Include="Services\Maintenance\IMaintenanceService.cs" />
+    <Compile Include="Services\Maintenance\MaintenanceService.cs" />
+    <Compile Include="Services\Reagent\IReagentService.cs" />
+    <Compile Include="Services\Reagent\ReagentService.cs" />
+    <Compile Include="Utility\Attributes\IgnoreColumnAttribute.cs" />
+    <Compile Include="Utility\Constants.cs" />
+    <Compile Include="Utility\Extensions.cs" />
+    <Compile Include="ValidationRules\TestResultRangeValidation.cs" />
+    <Compile Include="ValidationRules\DigitValidation.cs" />
+    <Compile Include="ValidationRules\EmailValidation.cs" />
+    <Compile Include="ValidationRules\PhoneValidation.cs" />
+    <Compile Include="ValidationRules\StringValidation.cs" />
+    <Compile Include="ViewModels\AbbrAndInterpViewModel.cs" />
+    <Compile Include="ViewModels\DealerViewModel.cs" />
+    <Compile Include="ViewModels\DrHospitalBillPaymentViewModel.cs" />
+    <Compile Include="ViewModels\DrHospitalBillViewModel.cs" />
+    <Compile Include="ViewModels\DrLabHospitalRateListViewModel.cs" />
+    <Compile Include="ViewModels\DrLabHospitalRegistrationViewModel.cs" />
+    <Compile Include="ViewModels\EmployeeViewModel.cs" />
+    <Compile Include="ViewModels\ExpensesViewModel.cs" />
+    <Compile Include="ViewModels\FieldOptionsViewModel.cs" />
+    <Compile Include="ViewModels\FormulaEditorViewModel.cs" />
+    <Compile Include="ViewModels\HomePageViewModel.cs" />
+    <Compile Include="ViewModels\InventoryViewModel.cs" />
+    <Compile Include="ViewModels\NonPatientIncomeViewModel.cs" />
+    <Compile Include="ViewModels\PatientBillPaymentViewModel.cs" />
+    <Compile Include="ViewModels\PatientBillViewModel.cs" />
+    <Compile Include="ViewModels\PatientBillPaymentsReportWindowViewModel.cs" />
+    <Compile Include="ViewModels\PatientRevenueReportWindowViewModel.cs" />
+    <Compile Include="ViewModels\ReagentEntryViewModel.cs" />
+    <Compile Include="ViewModels\ReagentTestRelationViewModel.cs" />
+    <Compile Include="ViewModels\ReagentViewModel.cs" />
+    <Compile Include="ViewModels\SalaryPaymentViewModel.cs" />
+    <Compile Include="ViewModels\SalaryViewModel.cs" />
+    <Compile Include="ViewModels\SelectToAddTestTitlesToGroupViewModel.cs" />
+    <Compile Include="ViewModels\SendToSpecializedLabWindowViewModel.cs" />
+    <Compile Include="ViewModels\SignaturePrototypeViewModel.cs" />
+    <Compile Include="ViewModels\ReferringCutPaymentReportWindowViewModel.cs" />
+    <Compile Include="ViewModels\SpecializedLabReportWindowViewModel.cs" />
+    <Compile Include="Views\AbbrAndInterpView.xaml.cs">
+      <DependentUpon>AbbrAndInterpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Base\BasePage.cs" />
+    <Compile Include="Views\DealerView.xaml.cs">
+      <DependentUpon>DealerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DrHospitalBillPaymentView.xaml.cs">
+      <DependentUpon>DrHospitalBillPaymentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DrHospitalBillView.xaml.cs">
+      <DependentUpon>DrHospitalBillView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DrLabHospitalRateListView.xaml.cs">
+      <DependentUpon>DrLabHospitalRateListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DrLabHospitalRegistrationView.xaml.cs">
+      <DependentUpon>DrLabHospitalRegistrationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EmployeeView.xaml.cs">
+      <DependentUpon>EmployeeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ExpensesView.xaml.cs">
+      <DependentUpon>ExpensesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FieldOptionsView.xaml.cs">
+      <DependentUpon>FieldOptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormulaEditorPage.xaml.cs">
+      <DependentUpon>FormulaEditorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InventoryView.xaml.cs">
+      <DependentUpon>InventoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NonPatientIncomeView.xaml.cs">
+      <DependentUpon>NonPatientIncomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PatientBillPaymentView.xaml.cs">
+      <DependentUpon>PatientBillPaymentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PatientBillView.xaml.cs">
+      <DependentUpon>PatientBillView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReagentEntryView.xaml.cs">
+      <DependentUpon>ReagentEntryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReagentTestRelationView.xaml.cs">
+      <DependentUpon>ReagentTestRelationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReagentView.xaml.cs">
+      <DependentUpon>ReagentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SalaryPaymentView.xaml.cs">
+      <DependentUpon>SalaryPaymentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SalaryView.xaml.cs">
+      <DependentUpon>SalaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SignaturePrototypeView.xaml.cs">
+      <DependentUpon>SignaturePrototypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DatabaseBackupWindow.xaml.cs">
+      <DependentUpon>DatabaseBackupWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\OPSMWindow.xaml.cs">
+      <DependentUpon>OPSMWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\IPassword.cs" />
+    <Compile Include="Services\Patient\IPatientService.cs" />
+    <Compile Include="Services\Patient\PatientService.cs" />
+    <Compile Include="Services\RequestProvider\IRequestProvider.cs" />
+    <Compile Include="Services\RequestProvider\RequestProvider.cs" />
+    <Compile Include="Services\Test\ITestService.cs" />
+    <Compile Include="Services\Test\TestService.cs" />
+    <Compile Include="Services\User\IUserService.cs" />
+    <Compile Include="Services\User\UserService.cs" />
+    <Compile Include="Services\WindowManager\IWindowManager.cs" />
+    <Compile Include="Services\WindowManager\WindowManager.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Utility\NavigationServiceSingleton.cs" />
+    <Compile Include="Utility\TinyIoC.cs" />
+    <Compile Include="Utility\URLBuilder.cs" />
+    <Compile Include="ValidationRules\EmptyTextBoxValidation.cs" />
+    <Compile Include="ViewModels\Base\GenericViewModel.cs" />
+    <Compile Include="ViewModels\Base\ViewModelBase.cs" />
+    <Compile Include="ViewModels\Base\DIContainer.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\OtherTestViewModel.cs" />
+    <Compile Include="ViewModels\RegistrationViewModel.cs" />
+    <Compile Include="ViewModels\TestGroupViewModel.cs" />
+    <Compile Include="ViewModels\TestResultsViewModel.cs" />
+    <Compile Include="ViewModels\TestTitleViewModel.cs" />
+    <Compile Include="ViewModels\UserManagementViewModel.cs" />
+    <Compile Include="Views\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OtherTestView.xaml.cs">
+      <DependentUpon>OtherTestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Registration.xaml.cs">
+      <DependentUpon>Registration.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestGroupView.xaml.cs">
+      <DependentUpon>TestGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestResultsView.xaml.cs">
+      <DependentUpon>TestResultsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestTitleView.xaml.cs">
+      <DependentUpon>TestTitleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserManagement.xaml.cs">
+      <DependentUpon>UserManagement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\PatientBillPaymentsReportWindow.xaml.cs">
+      <DependentUpon>PatientBillPaymentsReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ReportWindow.xaml.cs">
+      <DependentUpon>ReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CreateRichTextWindow.xaml.cs">
+      <DependentUpon>CreateRichTextWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SelectToAddTestTitlesToGroup.xaml.cs">
+      <DependentUpon>SelectToAddTestTitlesToGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SelectTestGroupWindow.xaml.cs">
+      <DependentUpon>SelectTestGroupWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SelectPatientWindow.xaml.cs">
+      <DependentUpon>SelectPatientWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CommonWindow.xaml.cs">
+      <DependentUpon>CommonWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SelectWindow.xaml.cs">
+      <DependentUpon>SelectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SendToSpecializedLabWindow.xaml.cs">
+      <DependentUpon>SendToSpecializedLabWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ReferringCutPaymentReportWindow.xaml.cs">
+      <DependentUpon>ReferringCutPaymentReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\PatientRevenueReportWindow.xaml.cs">
+      <DependentUpon>PatientRevenueReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SpecializedLabReportWindow.xaml.cs">
+      <DependentUpon>SpecializedLabReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WindowBase.cs" />
+    <Page Include="Controls\EditToolbar\EditToolbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MoreOptionsMenu\MoreOptionsMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NavigationControl\NavigationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ToolbarView\ToolbarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\AbbrAndInterpView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DealerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DrHospitalBillPaymentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DrHospitalBillView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DrLabHospitalRateListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DrLabHospitalRegistrationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EmployeeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ExpensesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FieldOptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FormulaEditorPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InventoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NonPatientIncomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PatientBillPaymentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PatientBillView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReagentEntryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReagentTestRelationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReagentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SalaryPaymentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SalaryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SignaturePrototypeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DatabaseBackupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\OPSMWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OtherTestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Registration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestGroupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestResultsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestTitleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\PatientBillPaymentsReportWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CreateRichTextWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\SelectToAddTestTitlesToGroup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\SelectTestGroupWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\SelectPatientWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\CommonWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\SelectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SendToSpecializedLabWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ReferringCutPaymentReportWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\PatientRevenueReportWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\SpecializedLabReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\PatientBillReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\PatientBillPaymentReport.rdlc" />
+    <EmbeddedResource Include="Resources\Reports\PatientRevenueReport.rdlc" />
+    <EmbeddedResource Include="Resources\Reports\ReferringCutPaymentReport.rdlc" />
+    <EmbeddedResource Include="Resources\Reports\ReferringCutPaymentReportWOPatients.rdlc" />
+    <EmbeddedResource Include="Resources\Reports\SpecializedLabPaymentReportWOPatients.rdlc" />
+    <EmbeddedResource Include="Resources\Reports\SpecializedLabPaymentReport.rdlc" />
+    <EmbeddedResource Include="Resources\Reports\TestReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="app.manifest" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="OPMS.Models.Dto.HdlReferringCutModelDto.datasource" />
+    <None Include="OPMS.Models.Dto.PatientBillPaymentReportDto.datasource" />
+    <None Include="OPMS.Models.Dto.PatientRevenueModelDto.datasource" />
+    <None Include="Resources\DataSources\OPMS.Models.Dto.SpecializedLabModelDto.datasource" />
+    <None Include="Resources\DataSources\OPMS.Models.Report.SpecializedLabOptionsModel.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Abbrevations.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.AccountHead.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Addresses.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.BaseEntity.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.CivilStatuses.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Dealers.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.EmployeeCategories.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.EmployeeRoles.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Employees.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Expenses.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.ExpensesAccountHead.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.FieldOptions.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Fields.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Formulas.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Genders.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.HdlRegistration.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Initials.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Inventories.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Occupations.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.OtherIncome.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.OtherTests.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.PatientBill.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.PatientBillPayment.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.ReagentBillEntries.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Reagents.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.RegistrationCategories.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.RegistrationTypes.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.RoleTypes.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Salary.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.SalaryPayment.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.SignaturePrototypes.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.TestGroups.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.TestReagentRelation.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.TestResults.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.TestTitles.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.UserRights.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Users.datasource" />
+    <None Include="Properties\Numbers.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Numbers.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\DataSources\OPMS.Models.AckModel.datasource" />
+    <None Include="Resources\DataSources\OPMS.Models.ErrorModel.datasource" />
+    <None Include="Resources\DataSources\OPMS.Models.ModelBase.datasource" />
+    <None Include="Resources\DataSources\OPMS.Models.ReportPrintingOptionsModel.datasource" />
+    <None Include="Resources\DataSources\OPMS.Models.ResponseModel.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.Patient.datasource" />
+    <None Include="Resources\DataSources\OPSMBackend.DataEntities.TestResultsView.datasource" />
+    <None Include="packages.config" />
+    <None Include="Properties\ReportPrintingOptions.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>ReportPrintingOptions.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\add.png" />
+    <Resource Include="Resources\Icons\center_align.png" />
+    <Resource Include="Resources\Icons\close.png" />
+    <Resource Include="Resources\Icons\delete.png" />
+    <Resource Include="Resources\Icons\edit.png" />
+    <Resource Include="Resources\Icons\next.png" />
+    <Resource Include="Resources\Icons\left_align.png" />
+    <Resource Include="Resources\Icons\lock.png" />
+    <Resource Include="Resources\Icons\login_bg_img.png" />
+    <Resource Include="Resources\Icons\print.png" />
+    <Resource Include="Resources\Icons\right_align.png" />
+    <Resource Include="Resources\Icons\three_dots.png" />
+    <Resource Include="Resources\Icons\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\last.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\first.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\previous.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\logo.png" />
+    <Resource Include="Resources\opms_logo.ico" />
+    <Resource Include="Resources\Icons\CharacterGrowFont.png" />
+    <Resource Include="Resources\Icons\CharacterShrinkFont.png" />
+    <Resource Include="Resources\Icons\ListBullets.png" />
+    <Resource Include="Resources\Icons\ListNumbering.png" />
+    <Resource Include="Resources\Icons\ParagraphCenterJustify.png" />
+    <Resource Include="Resources\Icons\ParagraphDecreaseIndentation.png" />
+    <Resource Include="Resources\Icons\ParagraphFullJustify.png" />
+    <Resource Include="Resources\Icons\ParagraphIncreaseIndentation.png" />
+    <Resource Include="Resources\Icons\ParagraphLeftJustify.png" />
+    <Resource Include="Resources\Icons\ParagraphRightJustify.png" />
+    <Resource Include="Resources\Icons\EditCopy.png" />
+    <Resource Include="Resources\Icons\EditCut.png" />
+    <Resource Include="Resources\Icons\EditPaste.png" />
+    <Resource Include="Resources\Icons\EditRedo.png" />
+    <Resource Include="Resources\Icons\EditUndo.png" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\MaterialDesignThemes.3.1.3\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.1.3\build\MaterialDesignThemes.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MaterialDesignThemes.3.1.3\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MaterialDesignThemes.3.1.3\build\MaterialDesignThemes.targets'))" />
+  </Target>
+</Project>

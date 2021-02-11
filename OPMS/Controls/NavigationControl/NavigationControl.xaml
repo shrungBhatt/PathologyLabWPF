@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="OPMS.Controls.NavigationControl.NavigationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OPMS.Controls.NavigationControl"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="CustomMaterialOutlineButton"
+                   BasedOn="{StaticResource MaterialDesignOutlinedButton}"
+                   TargetType="{x:Type Button}">
+                <Setter Property="materialDesign:ButtonAssist.CornerRadius"
+                        Value="0" />
+                <Setter Property="BorderThickness"
+                        Value="1" />
+                <Setter Property="BorderBrush"
+                        Value="Black" />
+            </Style>
+
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Horizontal"
+                Grid.Column="1"
+                HorizontalAlignment="Left">
+        <Button Margin="5,5,5,5"
+                Height="40"
+                Width="30"
+                Padding="0"
+                Visibility="{Binding NavButtonStateVisibility.Back}"
+                IsEnabled="{Binding NavButtonState.Back}"
+                Click="Back_Click"
+                Style="{StaticResource CustomMaterialOutlineButton}">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Resources/Icons/previous.png"
+                       RenderOptions.BitmapScalingMode="HighQuality"
+                       Width="16"
+                       Height="16" />
+            </StackPanel>
+        </Button>
+
+        <Button Margin="5,5,5,5"
+                Height="40"
+                Padding="0"
+                Width="30"
+                Visibility="{Binding NavButtonStateVisibility.Forward}"
+                IsEnabled="{Binding NavButtonState.Forward}"
+                Click="Forward_Click"
+                Style="{StaticResource CustomMaterialOutlineButton}">
+            <StackPanel>
+                <Image Source="pack://application:,,,/Resources/Icons/next.png"
+                       RenderOptions.BitmapScalingMode="HighQuality"
+                       Width="17"
+                       Height="17" />
+                
+            </StackPanel>
+        </Button>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,126 @@
+﻿<b:WindowBase x:Class="OPMS.Windows.SendToSpecializedLabWindow"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+              xmlns:local="clr-namespace:OPMS.Windows"
+              mc:Ignorable="d"
+              Background="{StaticResource PageBackground}"
+              xmlns:progressView="clr-namespace:OPMS.Controls.ProgressView"
+              xmlns:controls="clr-namespace:OPMS.Controls"
+              xmlns:b="clr-namespace:OPMS.Windows"
+              Title="Send Samples to Specialized Lab"
+              Height="500"
+              Width="800">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        
+        <Grid Margin="0,15,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Style="{StaticResource LabelStackPanel}"
+                        VerticalAlignment="Center">
+                <Label Content="Select Lab"
+                       FontSize="14" />
+
+            </StackPanel>
+
+            <ComboBox Grid.Column="1"
+                      Grid.ColumnSpan="2"
+                      ItemsSource="{Binding SpecializedLabs}"
+                      SelectedItem="{Binding SelectedSpecializedLab}"
+                      DisplayMemberPath="Name"
+                      Margin="3,0,3,0" />
+        </Grid>
+
+        <ListBox Grid.Row="0"
+                 x:Name="TestsListBox"
+                 Grid.Column="1"
+                 SelectionMode="Multiple"
+                 ItemsSource="{Binding TestTitles}"
+                 AlternationCount="2"
+                 Padding="0"
+                 Margin="10,5,10,10">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Name}"
+                           VerticalContentAlignment="Center"
+                           Padding="5,5,0,5" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+
+        <Button Content="Add to The Following Table"
+                Style="{StaticResource BrownButton}"
+                Grid.Row="1"
+                Margin="15,15,3,15"
+                IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}, ConverterParameter='Invert'}"
+                Click="AddToTable_Click"
+                Padding="0,5,0,5"
+                Grid.ColumnSpan="3" />
+
+        <controls:CustomDataGrid Grid.Row="2"
+                                 x:Name="ItemsDataGrid"
+                                 Grid.ColumnSpan="3"
+                                 SelectionMode="Single"
+                                 IsReadOnly="True"
+                                 ItemsSource="{Binding LabSamples}"
+                                 SelectedItem="{Binding SelectedLabSamples}"
+                                 Margin="10,0,10,10" />
+
+
+        <Label Grid.Row="1"
+               Margin="15,5,0,0"
+               Foreground="IndianRed"
+               VerticalAlignment="Center">
+            <TextBlock>
+                *Use 'Backspace' to delete  items from <LineBreak /> the below table
+            </TextBlock>
+        </Label>
+
+        <StackPanel Grid.Row="3"
+                    Grid.ColumnSpan="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Button Content="Cancel"
+                    MinWidth="100"
+                    Click="Cancel_Click"
+                    Background="PaleVioletRed"
+                    Margin="10" />
+            <Button Content="Save"
+                    MinWidth="100"
+                    Click="Save_Click"
+                    Background="LightGreen"
+                    Margin="10" />
+
+        </StackPanel>
+
+        <progressView:ProgressView Visibility="{Binding IsBusy}"
+                                   Grid.RowSpan="4"
+                                   Grid.ColumnSpan="3"/>
+    </Grid>
+</b:WindowBase>

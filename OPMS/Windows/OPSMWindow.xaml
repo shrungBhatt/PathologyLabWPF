@@ -1,0 +1,190 @@
+﻿<base:WindowBase x:Class="OPMS.OPSMWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:OPMS"
+                 xmlns:controls="clr-namespace:OPMS.Controls.ToolbarView"
+                 xmlns:b="http://schemas.microsoft.com/expression/2010/interactivity"
+                 xmlns:base="clr-namespace:OPMS.Windows"
+                 mc:Ignorable="d"
+                 d:DesignHeight="450"
+                 d:DesignWidth="800"
+                 WindowStyle="SingleBorderWindow"
+                 Title="Om Pathology Management System"
+                 Height="740"
+                 Width="1000">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0"
+              Height="30"
+              VerticalAlignment="Top">
+            <MenuItem Header="Registration"
+                      Height="30"
+                      Click="Registration_Clicked"
+                      Foreground="White" />
+            <MenuItem Header="Test Result"
+                      Height="30"
+                      Click="TestResults_Click"
+                      Foreground="White" />
+            <MenuItem Header="Finance"
+                      Height="30"
+                      Foreground="White">
+                <MenuItem Header="Patient bill"
+                          Click="PatientBill_Click"
+                          MinWidth="100" />
+                <MenuItem Header="Patient bill payment"
+                          Click="PatientBillPayment_Click"
+                          MinWidth="100" />
+                <Separator />
+                <MenuItem Header="Dr/Hospital bill"
+                          Click="DrHospitalBill_Click"
+                          MinWidth="100" />
+                <MenuItem Header="Dr/Hospital bill payment"
+                          Click="DrHospitalBillPayment_Click"
+                          MinWidth="100" />
+                <Separator />
+                <MenuItem Header="Other income"
+                          Click="OtherIncome_Click"
+                          MinWidth="100" />
+                <Separator />
+                <MenuItem Header="Expenses"
+                          Click="Expenses_Click"
+                          MinWidth="100" />
+                <Separator />
+                <MenuItem Header="Salary payment"
+                          Click="SalaryPayment_Click"
+                          MinWidth="100" />
+            </MenuItem>
+            <MenuItem Header="Maintenance"
+                      Height="30"
+                      Foreground="White">
+                <MenuItem Header="Test groups"
+                          Click="TestGroupsManagement_Clicked"
+                          MinWidth="100" />
+                <MenuItem Header="Test titles"
+                          Click="TestTitlesManagement_Clicked"
+                          MinWidth="100" />
+                <MenuItem Header="Other tests"
+                          Click="OtherTestsManagement_Clicked"
+                          MinWidth="100" />
+                <Separator />
+                <MenuItem Header="Reagent"
+                          Click="Reagent_Click"
+                          MinWidth="100" />
+                <MenuItem Header="Reagent test relation"
+                          Click="ReagentTestRelation_Click"
+                          MinWidth="100" />
+                <Separator />
+                <MenuItem Header="Dr/Lab/Hospital registration"
+                          Click="DrLabHospitalRegistration_Click"
+                          MinWidth="100" />
+                <MenuItem Header="Dr/Lab/Hospital rate list"
+                          Click="DrLabHospitalRateList_Click"
+                          MinWidth="100" />
+                <Separator />
+                <MenuItem Header="Inventory"
+                          Click="Inventory_Click"
+                          MinWidth="100" />
+                <MenuItem Header="Employee"
+                          Click="Employee_Click"
+                          MinWidth="100" />
+                <MenuItem Header="Salary"
+                          Click="Salary_Click"
+                          MinWidth="100" />
+                <Separator />
+                <MenuItem Header="Dealer"
+                          Click="Dealer_Click"
+                          MinWidth="100" />
+                <MenuItem Header="Reagent entry"
+                          Click="ReagentEntry_Click"
+                          MinWidth="100" />
+                <Separator />
+                <MenuItem Header="Signature"
+                          Click="SignaturePrototype_Click"
+                          MinWidth="100" />
+                <MenuItem Header="Abbrevation &amp; Interpretation"
+                          Click="AbbrInterp_Click"
+                          MinWidth="100" />
+                <MenuItem Header="Formula editor"
+                          Click="FormulaEditor_Click"
+                          MinWidth="100" />
+                <MenuItem Header="Field options"
+                          Click="FieldOptions_Click"
+                          MinWidth="100" />
+            </MenuItem>
+            <MenuItem Header="Reports"
+                      Height="30"
+                      Foreground="White">
+                <MenuItem Header="Revenue"
+                          MinWidth="100">
+                    <MenuItem Header="Patient Revenue"
+                              Click="PatientRevenue_Click"
+                              MinWidth="100" />
+                    <MenuItem Header="Patient Receipt"
+                              Click="PatientReceipt_Click"
+                              MinWidth="100" />
+                </MenuItem>
+                <MenuItem Header="Referring Hospital/Dr/Lab Payment"
+                          Click="ReferringPayment_Click"
+                          MinWidth="100" />
+                <MenuItem Header="Specialized Lab Payment"
+                          Click="SpecializedLabPaymentReport_Click"
+                          MinWidth="100" />
+            </MenuItem>
+            <MenuItem Header="User Management"
+                      Height="30"
+                      Foreground="White">
+                <MenuItem Header="User management"
+                          Click="UserManagement_Clicked"
+                          MinWidth="100" />
+                <MenuItem Header="Change password"
+                          Click="ChangePassword_Clicked"
+                          MinWidth="100" />
+                <MenuItem Header="Access level management"
+                          Click="AccessLevelManagement_Clicked"
+                          MinWidth="100" />
+            </MenuItem>
+            <MenuItem Header="Windows"
+                      Height="30"
+                      Click="WindowsMenuItem_Click"
+                      x:Name="WindowsMenuItem"
+                      Foreground="White">
+                <MenuItem.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding Name}">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="MouseDown">
+                                    <b:InvokeCommandAction Command="{Binding OnJournalClickedCommand}"
+                                                           CommandParameter="{Binding .}" />
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                        </Label>
+                    </DataTemplate>
+                </MenuItem.ItemTemplate>
+            </MenuItem>
+            <MenuItem Header="Tools"
+                      Height="30"
+                      Foreground="White">
+                <MenuItem Header="Logs"
+                          Click="Logs_Click"
+                          MinWidth="100" />
+            </MenuItem>
+            <MenuItem Header="About"
+                      Height="30"
+                      Foreground="White" />
+        </Menu>
+
+        <Frame x:Name="ContentFrame"
+               NavigationUIVisibility="Hidden"
+               Grid.Row="1" />
+
+
+    </Grid>
+</base:WindowBase>

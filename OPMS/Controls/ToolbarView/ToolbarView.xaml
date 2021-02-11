@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="OPMS.Controls.ToolbarView.ToolbarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:OPMS.Controls.ToolbarView"
+             xmlns:editToolbar="clr-namespace:OPMS.Controls"
+             xmlns:navToolbar="clr-namespace:OPMS.Controls.NavigationControl"
+             xmlns:moreOptionsMenu="clr-namespace:OPMS.Controls.MoreOptionsMenu"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1024">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <Grid Background="{DynamicResource SecondaryColor}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <navToolbar:NavigationControl Grid.Column="0"
+                                          NavigationInteraction="{Binding Path=DataContext.NavigationInteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                          NavButtonState="{Binding Path=DataContext.NavButtonState, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                          NavButtonStateVisibility="{Binding Path=DataContext.NavButtonStateVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"/>
+
+            <Label Content="{Binding Title}"
+                   x:Name="TitleText"
+                   FontSize="22"
+                   Padding="0"
+                   Foreground="Black"
+                   Grid.Column="1"
+                   VerticalContentAlignment="Center"
+                   Margin="10,0,0,0" />
+
+            <editToolbar:EditToolbar Grid.Column="2"
+                                     x:Name="EditToolbarView"
+                                     ButtonState="{Binding Path=DataContext.ButtonState, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                     ButtonStateVisibility="{Binding Path=DataContext.ButtonStateVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                     Interaction="{Binding Path=DataContext.EditToolBarInteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" />
+
+            <moreOptionsMenu:MoreOptionsMenu Grid.Column="3"
+                                             ItemSource="{Binding Path=DataContext.MoreOptionsMenuItemSource, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                             MoreOptionsMenuInteraction="{Binding Path=DataContext.MoreOptionsMenuInteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" />
+
+
+
+        </Grid>
+    </StackPanel>
+</UserControl>

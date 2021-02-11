@@ -1,0 +1,583 @@
+﻿<base:BasePage x:Class="OPMS.Views.DrHospitalBillPaymentView"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:local="clr-namespace:OPMS.Views"
+               xmlns:progressView="clr-namespace:OPMS.Controls.ProgressView"
+               xmlns:toolbarView="clr-namespace:OPMS.Controls.ToolbarView"
+               xmlns:controls="clr-namespace:OPMS.Controls"
+               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+               mc:Ignorable="d"
+               xmlns:base="clr-namespace:OPMS.Views.Base"
+               xmlns:properties="clr-namespace:OPMS.Properties"
+               d:DesignHeight="720"
+               d:DesignWidth="1024"
+               KeepAlive="True"
+               Title="Dr/Hospital/Lab Bill Payment">
+
+    <Page.Resources>
+        <ResourceDictionary>
+
+
+            <Style x:Key="LabelStackPanel"
+                   TargetType="StackPanel">
+                <Setter Property="HorizontalAlignment"
+                        Value="Right" />
+                <Setter Property="VerticalAlignment"
+                        Value="Center" />
+                <Setter Property="Margin"
+                        Value="0,0,5,0" />
+                <Setter Property="Orientation"
+                        Value="Horizontal" />
+            </Style>
+
+            <properties:ReportPrintingOptions x:Key="PrintingSettings" />
+
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <toolbarView:ToolbarView Grid.Row="0"
+                                     Grid.ColumnSpan="3"
+                                     Title="Dr/Hospital bill payment"
+                                     ButtonState="{Binding Path=DataContext.EditButtonActiveStateModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     ButtonStateVisibility="{Binding Path=DataContext.EditToolbarButtonVisibilityState, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     EditToolBarInteraction="{Binding Path=DataContext.EditBarInteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     MoreOptionsMenuItemSource="{Binding Path=DataContext.MoreOptionsMenuModels, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     MoreOptionsMenuInteraction="{Binding Path=DataContext.MoreMenuInteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     NavigationInteraction="{Binding Path=DataContext.Navigationlnteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     NavButtonState="{Binding Path=DataContext.NavToolbarButtonActiveStateModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     NavButtonStateVisibility="{Binding Path=DataContext.NavToolbarButtonVisibilityStateModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
+
+            <StackPanel Margin="0,0,0,20"
+                        Grid.Row="1">
+                <Label Content="Dr/Hospital bill information"
+                       FontSize="20"
+                       Padding="10,0,0,20" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="*"
+                               FontSize="14"
+                               Padding="10,0,0,0"
+                               Foreground="Red"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+                        <Label Content="Dr/Hospital"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             IsEnabled="False"
+                             Text="{Binding SelectedHdl.Id}"
+                             Margin="3,0,3,0" />
+
+                    <Button Grid.Column="2"
+                            IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}, ConverterParameter='Invert'}"
+                            Command="{Binding SelectHdlCommand}"
+                            Content="Select Dr/Hosp." />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+
+                        <Label Content="Name"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             IsEnabled="False"
+                             Text="{Binding SelectedHdl.Name}"
+                             Margin="3,0,0,0" />
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="From date"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <DatePicker Grid.Column="1"
+                                Grid.ColumnSpan="2"
+                                IsEnabled="False"
+                                SelectedDate="{Binding SelectedHdl.Bill.FromDate}"
+                                Margin="3,0,0,0" />
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="To date"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <DatePicker Grid.Column="1"
+                                Grid.ColumnSpan="2"
+                                IsEnabled="False"
+                                SelectedDate="{Binding SelectedHdl.Bill.ToDate}"
+                                Margin="3,0,0,0" />
+                </Grid>
+
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,20"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}">
+                <Label Content="Bill information"
+                       FontSize="20"
+                       Padding="10,0,0,20" />
+
+                <Grid Margin="0,0,0,0"
+                      IsEnabled="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="*"
+                               FontSize="14"
+                               Padding="10,0,0,0"
+                               Foreground="Red"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+                        <Label Content="Total charges"
+                               FontSize="14" />
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedHdl.Bill.FinalAmount, Mode=OneWay}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0"
+                      IsEnabled="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="Bill date"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <DatePicker Grid.Column="1"
+                                Grid.ColumnSpan="2"
+                                SelectedDate="{Binding SelectedHdl.Bill.BillDate}"
+                                Margin="3,0,0,0" />
+                </Grid>
+
+                <Button Content="Print payment receipt"
+                        Margin="10,15,10,0"
+                        Grid.Row="4"
+                        MaxWidth="250"
+                        IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}, ConverterParameter='Invert'}"
+                        Background="{StaticResource PrimaryColorDark}"
+                        Foreground="White"
+                        VerticalAlignment="Center"
+                        Padding="0,5,0,5" />
+
+                <!--<Button Content="Search previous payments"
+                        Margin="10,15,10,0"
+                        Grid.Row="4"
+                        MaxWidth="250"
+                        IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}, ConverterParameter='Invert'}"
+                        Background="{StaticResource PrimaryColorDark}"
+                        Foreground="White"
+                        VerticalAlignment="Center"
+                        Padding="0,5,0,5" />-->
+
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,20"
+                        Grid.Row="2"
+                        IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}">
+                <Label Content="Payment information"
+                       FontSize="20"
+                       Padding="10,0,0,20" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="*"
+                               FontSize="14"
+                               Padding="10,0,0,0"
+                               Foreground="Red"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+                        <Label Content="Receipt no."
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Text="{Binding SelectedModel.ReceiptNo}"
+                             Margin="3,0,3,0" />
+
+                    <Button Grid.Column="2"
+                            Command="{Binding ResetReceiptNoCommand}"
+                            Content="Reset no." />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+
+                        <Label Content="Mode"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}"
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                Grid.ColumnSpan="3">
+
+                        <RadioButton Content="Cash"
+                                     x:Name="CashMode"
+                                     IsChecked="{Binding SelectedModel.CashMode}"
+                                     Margin="5,0,0,0" />
+
+                        <RadioButton Content="Cheque"
+                                     x:Name="ChequeMode"
+                                     IsChecked="{Binding SelectedModel.ChequeMode}"
+                                     Margin="5,0,0,0" />
+
+                        <RadioButton Content="Db/Cr card"
+                                     x:Name="CardMode"
+                                     IsChecked="{Binding SelectedModel.CardMode}"
+                                     Margin="5,0,0,0" />
+
+                    </StackPanel>
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0"
+                      IsEnabled="{Binding Source={x:Reference ChequeMode},Path=IsChecked}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+
+                        <Label Content="Bank name"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.BankName}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0"
+                      IsEnabled="{Binding Source={x:Reference ChequeMode},Path=IsChecked}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="Branch"
+                               FontSize="14" />
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.BranchName}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0"
+                      IsEnabled="{Binding Source={x:Reference ChequeMode},Path=IsChecked}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="Cheque no."
+                               FontSize="14" />
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.ChequeNo}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0"
+                      IsEnabled="{Binding Source={x:Reference ChequeMode},Path=IsChecked}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="Cheque date"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <DatePicker Grid.Column="1"
+                                Grid.ColumnSpan="2"
+                                SelectedDate="{Binding SelectedModel.ChequeDate}"
+                                Margin="3,0,0,0" />
+                </Grid>
+
+
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,20"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}">
+                <Label Content=""
+                       FontSize="20"
+                       Padding="10,0,0,20" />
+
+                <Grid Margin="0,0,0,0"
+                      IsEnabled="{Binding Source={x:Reference CardMode},Path=IsChecked}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="Card no."
+                               FontSize="14" />
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.CardNo}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="39*" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}"
+                                VerticalAlignment="Top">
+                        <Label Content="*"
+                               FontSize="14"
+                               Padding="10,0,0,0"
+                               Foreground="Red"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+                        <Label Content="Payment type"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <ComboBox Grid.Column="1"
+                              Grid.ColumnSpan="2"
+                              ItemsSource="{Binding PaymentTypes}"
+                              SelectedItem="{Binding SelectedPaymentType}"
+                              DisplayMemberPath="Name"
+                              Margin="3,0,3,0" />
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="*"
+                               FontSize="14"
+                               Padding="10,0,0,0"
+                               Foreground="Red"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+                        <Label Content="Payment date"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <DatePicker Grid.Column="1"
+                                Grid.ColumnSpan="2"
+                                SelectedDate="{Binding SelectedModel.PaymentDate}"
+                                Margin="3,0,0,0" />
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="*"
+                               FontSize="14"
+                               Padding="10,0,0,0"
+                               Foreground="Red"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+                        <Label FontSize="14">
+                            <TextBlock>
+                                Payment
+                                <LineBreak />
+                                amount
+                            </TextBlock>
+                        </Label>
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.PaymentAmount, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label FontSize="14">
+                            <TextBlock>
+                                Balance
+                            </TextBlock>
+                        </Label>
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             IsEnabled="False"
+                             Text="{Binding SelectedModel.Balance, StringFormat=N2}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label FontSize="14">
+                            <TextBlock>
+                                Bill paid by
+                            </TextBlock>
+                        </Label>
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.BillPaidBy}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+            </StackPanel>
+        </Grid>
+        <progressView:ProgressView Visibility="{Binding IsBusy}" />
+    </Grid>
+</base:BasePage>

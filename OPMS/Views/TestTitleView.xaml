@@ -1,0 +1,396 @@
+﻿<b:BasePage x:Class="OPMS.Views.TestTitleView"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:local="clr-namespace:OPMS.Views"
+            mc:Ignorable="d"
+            xmlns:progressView="clr-namespace:OPMS.Controls.ProgressView"
+            xmlns:toolbarView="clr-namespace:OPMS.Controls.ToolbarView"
+            xmlns:controls="clr-namespace:OPMS.Controls"
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+            xmlns:behaviour="clr-namespace:OPMS.Behaviours"
+            xmlns:validations="clr-namespace:OPMS.ValidationRules"
+            d:DesignHeight="720"
+            xmlns:b="clr-namespace:OPMS.Views.Base"
+            d:DesignWidth="1024"
+            KeepAlive="True"
+            Title="Test Titles">
+
+    <i:Interaction.Behaviors>
+        <behaviour:ValidationErrorMappingBehavior HasValidationError="{Binding IsInvalid,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+    </i:Interaction.Behaviors>
+
+    <Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <toolbarView:ToolbarView Grid.Row="0"
+                                     Grid.ColumnSpan="3"
+                                     Title="Test Titles"
+                                     ButtonState="{Binding Path=DataContext.EditButtonActiveStateModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     EditToolBarInteraction="{Binding Path=DataContext.EditBarInteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     MoreOptionsMenuItemSource="{Binding Path=DataContext.MoreOptionsMenuModels, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     MoreOptionsMenuInteraction="{Binding Path=DataContext.MoreMenuInteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     NavigationInteraction="{Binding Path=DataContext.Navigationlnteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     NavButtonState="{Binding Path=DataContext.NavToolbarButtonActiveStateModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     NavButtonStateVisibility="{Binding Path=DataContext.NavToolbarButtonVisibilityStateModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
+
+            <StackPanel Margin="0,0,0,20"
+                        Grid.Row="1">
+                <Label Content="Test title information"
+                       FontSize="20"
+                       Padding="10,0,0,20" />
+
+                <Grid Margin="0,10,0,0"
+                      IsEnabled="{Binding UserNavigatedFromGroups, Converter={StaticResource InverseBoolConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+
+                        <Label Content="Group name"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <ComboBox Grid.Column="1"
+                              Grid.ColumnSpan="2"
+                              ItemsSource="{Binding TestGroupTypeDtos}"
+                              SelectedItem="{Binding GroupTypeSelectedItem}"
+                              IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}"
+                              DisplayMemberPath="Name"
+                              Margin="3,0,3,0" />
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="*"
+                               FontSize="14"
+                               Padding="10,0,0,0"
+                               Foreground="Red"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+                        <Label Content="Title name"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}"
+                             Margin="3,0,3,0">
+                        <TextBox.Text>
+                            <Binding Path="SelectedModel.Name"
+                                     UpdateSourceTrigger="PropertyChanged"
+                                     ValidatesOnNotifyDataErrors="True"
+                                     NotifyOnValidationError="True">
+                                <Binding.ValidationRules>
+                                    <validations:EmptyTextBoxValidation ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                </Grid>
+
+
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="*"
+                               FontSize="14"
+                               Padding="10,0,0,0"
+                               Foreground="Red"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+                        <Label Content="Charges"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="1"
+                             IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}"
+                             Margin="3,0,3,0">
+                        <TextBox.Text>
+                            <Binding Path="SelectedModel.Charges"
+                                     UpdateSourceTrigger="PropertyChanged"
+                                     ValidatesOnNotifyDataErrors="True"
+                                     NotifyOnValidationError="True">
+                                <Binding.ValidationRules>
+                                    <validations:DigitValidation ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="Title order"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="1"
+                             Text="{Binding SelectedModel.OrderBy}"
+                             IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}"
+                             Margin="3,0,3,0" />
+
+                </Grid>
+
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox Grid.Column="1"
+                              Grid.ColumnSpan="2"
+                              IsChecked="{Binding SelectedModel.WordFormatResult}"
+                              IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}"
+                              Content="Word format test"
+                              Margin="2,0,3,0" />
+
+                </Grid>
+
+
+
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,20"
+                        Grid.Row="1"
+                        Grid.Column="1">
+                <Label Content="Report contents"
+                       FontSize="20"
+                       Padding="10,0,0,20" />
+
+                <Grid Margin="0,10,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="39*" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}"
+                                VerticalAlignment="Top">
+                        <Label FontSize="14">
+                            <TextBlock>
+                                Header
+                                <LineBreak />
+                                Note
+                            </TextBlock>
+                        </Label>
+
+                    </StackPanel>
+
+                    <controls:CustomRichTextBox Grid.Column="1"
+                                                Height="80"
+                                                MaxHeight="80"
+                                                AcceptsReturn="True"
+                                                RichText="{Binding SelectedModel.HeaderNote}"
+                                                IsReadOnly="True"
+                                                VerticalScrollBarVisibility="Auto"
+                                                VerticalContentAlignment="Top"
+                                                Grid.ColumnSpan="1"
+                                                Margin="3,0,3,0"
+                                                Grid.RowSpan="2"
+                                                IsEnabled="False" />
+
+
+                    <Button Content="Edit"
+                            Height="30"
+                            Width="50"
+                            IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}"
+                            Command="{Binding HeaderEditCommand}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Grid.Column="2" />
+
+                </Grid>
+
+                <Grid Margin="0,10,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="39*" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}"
+                                VerticalAlignment="Top">
+                        <Label FontSize="14">
+                            <TextBlock>
+                                Footer
+                                <LineBreak />
+                                Note
+                            </TextBlock>
+                        </Label>
+
+                    </StackPanel>
+
+                    <controls:CustomRichTextBox Grid.Column="1"
+                                                Height="80"
+                                                MaxHeight="80"
+                                                AcceptsReturn="True"
+                                                RichText="{Binding SelectedModel.FooterNote}"
+                                                IsReadOnly="True"
+                                                VerticalScrollBarVisibility="Auto"
+                                                VerticalContentAlignment="Top"
+                                                Grid.ColumnSpan="1"
+                                                Margin="3,0,3,0"
+                                                Grid.RowSpan="2"
+                                                IsEnabled="False" />
+
+                    <Button Content="Edit"
+                            Height="30"
+                            Width="50"
+                            IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}"
+                            Command="{Binding FooterEditCommand}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Grid.Column="2" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox Grid.Column="1"
+                              Grid.ColumnSpan="2"
+                              IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}"
+                              IsChecked="{Binding SelectedModel.ShowNormalRangeHeader}"
+                              Content="Don't show normal range header"
+                              Margin="2,0,3,0" />
+
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,20"
+                        Grid.Row="1"
+                        VerticalAlignment="Center"
+                        Grid.Column="2">
+
+                <Button Content="Print rate list"
+                        Margin="10"
+                        Grid.Row="4"
+                        Style="{StaticResource BrownButton}"
+                        MaxWidth="250"
+                        IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}, ConverterParameter='Button'}"
+                        VerticalAlignment="Center"
+                        Padding="0,5,0,5" />
+
+                <Button Content="Go to test"
+                        Margin="10"
+                        Grid.Row="6"
+                        MaxWidth="250"
+                        Command="{Binding GoToOtherTestsCommand}"
+                        Style="{StaticResource BrownButton}"
+                        IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}, ConverterParameter='Button'}"
+                        VerticalAlignment="Center"
+                        Padding="0,5,0,5" />
+
+                <!--<Button Content="Add test in selected titles from other titles"
+                        Margin="10"
+                        Grid.Row="4"
+                        Style="{StaticResource BrownButton}"
+                        MaxWidth="250"
+                        IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}, ConverterParameter='Button'}"
+                        VerticalAlignment="Center"
+                        Padding="0,5,0,5" />-->
+
+            </StackPanel>
+
+            <Grid Grid.Row="2"
+                  Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Style="{StaticResource LabelStackPanel}">
+                    <Label FontSize="14"
+                           Content="Title search"
+                           HorizontalContentAlignment="Right"
+                           HorizontalAlignment="Right" />
+
+                </StackPanel>
+
+                <TextBox Grid.Column="1"
+                         MaxWidth="200"
+                         Text="{Binding SearchTitle}"
+                         IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}, ConverterParameter='Invert'}"
+                         Margin="3,0,3,0" />
+
+                <Button Grid.Column="2"
+                        Grid.ColumnSpan="2"
+                        IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}, ConverterParameter='Invert'}"
+                        MaxWidth="200"
+                        Margin="0,0,5,0"
+                        Content="Search title" />
+
+            </Grid>
+
+            <controls:CustomDataGrid Grid.Row="3"
+                                     Grid.ColumnSpan="3"
+                                     IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}, ConverterParameter='DataGrid'}"
+                                     ItemsSource="{Binding ModelDtos}"
+                                     SelectedItem="{Binding SelectedModel}"
+                                     Margin="10,0,10,10" />
+
+        </Grid>
+
+        <progressView:ProgressView Visibility="{Binding IsBusy}" />
+    </Grid>
+</b:BasePage>

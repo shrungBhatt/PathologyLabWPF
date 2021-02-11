@@ -1,0 +1,279 @@
+﻿<local:WindowBase x:Class="OPMS.Windows.PatientBillPaymentsReportWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:local="clr-namespace:OPMS.Windows"
+                  xmlns:b="clr-namespace:OPMS.Windows"
+                  mc:Ignorable="d"
+                  Title="Generate Specialized Lab Report"
+                  Background="{StaticResource PageBackground}"
+                  xmlns:progressView="clr-namespace:OPMS.Controls.ProgressView"
+                  xmlns:controls="clr-namespace:OPMS.Controls"
+                  Height="550"
+                  Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <StackPanel Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        
+                        Margin="0,30,0,0">
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="*"
+                               FontSize="14"
+                               Padding="0,0,0,0"
+                               Foreground="Red"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+                        <Label Content="From Date"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <DatePicker Grid.Column="1"
+                                Grid.ColumnSpan="2"
+                                Padding="3"
+                                HorizontalAlignment="Left"
+                                MaxWidth="150"
+                                SelectedDate="{Binding FromDate}"
+                                Margin="3,0,3,0">
+                    </DatePicker>
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="*"
+                               FontSize="14"
+                               Padding="10,0,0,0"
+                               Foreground="Red"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+                        <Label Content="To Date"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <DatePicker Grid.Column="1"
+                                Grid.ColumnSpan="2"
+                                Padding="3"
+                                HorizontalAlignment="Left"
+                                MaxWidth="150"
+                                SelectedDate="{Binding ToDate}"
+                                Margin="3,0,3,0">
+                    </DatePicker>
+                </Grid>
+
+            </StackPanel>
+        </StackPanel>
+
+        <Grid Grid.Row="1"
+              MinWidth="250"
+              HorizontalAlignment="Center">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel HorizontalAlignment="Left"
+                        Margin="0,0,0,10">
+                <Label Content="Entry Done by (User)"
+                       FontSize="20"
+                       Padding="10,0,0,0" />
+                <RadioButton Content="All"
+                             x:Name="AllLabsRB"
+                             GroupName="One"
+                             IsChecked="{Binding ShowAllReferringHdls}"
+                             
+                             Margin="10,10,0,0" />
+
+                <RadioButton Margin="10,10,0,0"
+                             GroupName="One"
+                             IsChecked="{Binding SelectAllReferringHdls}"
+                             x:Name="SelectReferringRB">
+                    <TextBlock>
+                            Select Referring
+                    </TextBlock>
+                </RadioButton>
+            </StackPanel>
+
+            <ListBox Grid.Row="1"
+                     x:Name="TestsListBox"
+                     VerticalAlignment="Top"
+                     SelectionMode="Multiple"
+                     MaxHeight="80"
+                     MinHeight="80"
+                     ItemsSource="{Binding Users}"
+                     IsEnabled="{Binding Source={x:Reference SelectReferringRB},Path=IsChecked}"
+                     SelectionChanged="TestsListBox_SelectionChanged"
+                     AlternationCount="2"
+                     Padding="0"
+                     Margin="10,0,10,10">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding UserName}"
+                               VerticalContentAlignment="Center"
+                               Padding="5,5,0,5" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+        </Grid>
+
+        <Grid Grid.Row="1"
+              Grid.Column="1"
+              MinWidth="250"
+              HorizontalAlignment="Center">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel HorizontalAlignment="Left"
+                        Margin="0,0,0,10">
+                <Label Content="Payment Type"
+                       FontSize="20"
+                       Padding="10,0,0,0" />
+                <RadioButton Content="All"
+                             GroupName="Two"
+                             IsChecked="{Binding ShowAllOccupations}"
+                             Margin="10,10,0,0" />
+
+                <RadioButton Margin="10,10,0,0"
+                             GroupName="Two"
+                             x:Name="SelectOccupationRB"
+                             IsChecked="{Binding SelectAllOccupations}">
+                    <TextBlock>
+                            Select Occupation
+                    </TextBlock>
+                </RadioButton>
+            </StackPanel>
+
+            <ListBox Grid.Row="1"
+                     x:Name="OccupationListBox"
+                     VerticalAlignment="Top"
+                     SelectionMode="Multiple"
+                     MaxHeight="80"
+                     MinHeight="80"
+                     ItemsSource="{Binding PaymentTypes}"
+                     IsEnabled="{Binding Source={x:Reference SelectOccupationRB},Path=IsChecked}"
+                     SelectionChanged="Occupation_SelectionChanged"
+                     AlternationCount="2"
+                     Padding="0"
+                     Margin="10,0,10,10">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding Name}"
+                               VerticalContentAlignment="Center"
+                               Padding="5,5,0,5" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+        </Grid>
+        
+        <Grid Grid.Row="2"
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
+              MinWidth="250"
+              HorizontalAlignment="Center">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel HorizontalAlignment="Left"
+                        Margin="0,0,0,10">
+                <Label Content="Payment Mode"
+                       FontSize="20"
+                       Padding="10,0,0,0" />
+                <RadioButton Content="All"
+                             GroupName="Three"
+                             IsChecked="{Binding ShowAllStatuses}"
+                             Margin="10,10,0,0" />
+
+                <RadioButton Margin="10,10,0,0"
+                             GroupName="Three"
+                             x:Name="SelectStatusRB"
+                             IsChecked="{Binding SelectAllStatus}">
+                    <TextBlock>
+                            Select Status
+                    </TextBlock>
+                </RadioButton>
+            </StackPanel>
+
+            <ListBox Grid.Row="1"
+                     VerticalAlignment="Top"
+                     SelectionMode="Single"
+                     MaxHeight="80"
+                     MinHeight="80"
+                     ItemsSource="{Binding Statuses}"
+                     IsEnabled="{Binding Source={x:Reference SelectStatusRB},Path=IsChecked}"
+                     AlternationCount="2"
+                     SelectedItem="{Binding SelectedStatus}"
+                     Padding="0"
+                     Margin="10,0,10,10">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding Name}"
+                               VerticalContentAlignment="Center"
+                               Padding="5,5,0,5" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+        </Grid>
+
+        <StackPanel Grid.Row="3"
+                    Grid.ColumnSpan="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Button Content="Close"
+                    MinWidth="100"
+                    Click="Close_Click"
+                    Background="PaleVioletRed"
+                    Margin="10" />
+            <Button Content="Show"
+                    MinWidth="100"
+                    Command="{Binding ShowReportCommand}"
+                    Background="LightGreen"
+                    Margin="10" />
+
+        </StackPanel>
+
+        <progressView:ProgressView Visibility="{Binding IsBusy}"
+                                   Grid.RowSpan="4"
+                                   Grid.ColumnSpan="3" />
+    </Grid>
+</local:WindowBase>

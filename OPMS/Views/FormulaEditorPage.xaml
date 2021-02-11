@@ -1,0 +1,193 @@
+﻿<Page x:Class="OPMS.Views.FormulaEditorPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:OPMS.Views"
+      xmlns:progressView="clr-namespace:OPMS.Controls.ProgressView"
+      xmlns:toolbarView="clr-namespace:OPMS.Controls.ToolbarView"
+      xmlns:controls="clr-namespace:OPMS.Controls"
+      xmlns:behaviours="clr-namespace:OPMS.Behaviours"
+      xmlns:b="http://schemas.microsoft.com/expression/2010/interactivity"
+      mc:Ignorable="d"
+      x:Name="MainPage"
+      d:DesignHeight="768"
+      d:DesignWidth="1024"
+      KeepAlive="True"
+      Title="Formula Editor">
+
+    <Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <toolbarView:ToolbarView Grid.Row="0"
+                                     Grid.ColumnSpan="3"
+                                     Title="Formula Editor"
+                                     ButtonState="{Binding Path=DataContext.EditButtonActiveStateModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     EditToolBarInteraction="{Binding Path=DataContext.EditBarInteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     MoreOptionsMenuItemSource="{Binding Path=DataContext.MoreOptionsMenuModels, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     MoreOptionsMenuInteraction="{Binding Path=DataContext.MoreMenuInteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     NavigationInteraction="{Binding Path=DataContext.Navigationlnteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     NavButtonState="{Binding Path=DataContext.NavToolbarButtonActiveStateModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     NavButtonStateVisibility="{Binding Path=DataContext.NavToolbarButtonVisibilityStateModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"/>
+
+            <StackPanel Margin="0,0,0,20"
+                        Grid.Row="1">
+                <Label Content="Select test title"
+                       FontSize="20"
+                       Padding="10,0,0,20" />
+
+                <Label Content="Test group"
+                       FontSize="14"
+                       Padding="10,0,0,5" />
+
+                <ComboBox Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          DisplayMemberPath="Name"
+                          ItemsSource="{Binding TestGroupsDtos}"
+                          SelectedItem="{Binding SelectedTestGroup}"
+                          IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}"
+                          Margin="10,0,10,10" />
+
+                <TreeView Grid.Row="1"
+                          ItemsSource="{Binding SelectedTestTitles}"
+                          IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}"
+                          DisplayMemberPath="Name"
+                          Margin="10,0,10,10">
+                    <b:Interaction.Behaviors>
+                        <behaviours:BindableSelectedItemBehavior SelectedItem="{Binding Path='DataContext.SelectedTestTitle', RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
+                    </b:Interaction.Behaviors>
+
+                </TreeView>
+
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,20"
+                        Grid.Row="1"
+                        Grid.Column="1">
+                <Label Content="Formula creator"
+                       FontSize="20"
+                       Padding="10,0,0,20" />
+
+                <Label Content="Create formula for test"
+                       FontSize="14"
+                       Padding="10,0,0,5" />
+
+                <ComboBox Grid.Column="1"
+                          Grid.ColumnSpan="2"
+                          DisplayMemberPath="Name"
+                          ItemsSource="{Binding SelectedOtherTests}"
+                          SelectedItem="{Binding SelectedOtherTest}"
+                          IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}"
+                          Margin="10,0,10,10" />
+
+                <Label Content="Select tests and create formula"
+                       FontSize="14"
+                       Padding="10,0,0,0" />
+
+                <ListBox Grid.Row="2"
+                         ItemsSource="{Binding SelectedOtherTests}"
+                         Height="250"
+                         SelectedItem="{Binding SelectedOtherTestForFormula, Mode=TwoWay}"
+                         IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}"
+                         AlternationCount="2"
+                         Padding="0"
+                         Margin="10,5,10,10">
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Name}"
+                                   VerticalContentAlignment="Center"
+                                   Padding="5,5,0,5" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
+                </ListBox>
+
+            </StackPanel>
+
+            <Grid IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}"
+                  VerticalAlignment="Stretch"
+                  Grid.Row="1"
+                  Grid.Column="2">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5*" />
+                </Grid.RowDefinitions>
+                
+                <Label Content="Formula editor"
+                       FontSize="20"
+                       Padding="10,0,0,20" />
+
+                <TextBox Margin="10,0,10,0"
+                         Grid.Row="1"
+                         Text="{Binding Formula}"
+                         KeyDown="RichTextBox_KeyDown"
+                         FontSize="16"
+                         MinHeight="300"
+                         TextWrapping="WrapWithOverflow"
+                         VerticalAlignment="Top" />
+
+                <StackPanel Orientation="Vertical"
+                            VerticalAlignment="Top"
+                            Grid.Column="1"
+                            Margin="0,0,10,0"
+                            Grid.Row="1"
+                            MinHeight="100">
+                    <Button Content="Undo"
+                            Margin="5,5,5,0"
+                            MaxWidth="250"
+                            Background="{StaticResource PrimaryColorDark}"
+                            Foreground="White"
+                            VerticalAlignment="Bottom"
+                            Padding="0,5,0,5" />
+
+                    <Button Content="Redo"
+                            Margin="5,5,5,0"
+                            MaxWidth="250"
+                            Background="{StaticResource PrimaryColorDark}"
+                            Foreground="White"
+                            VerticalAlignment="Bottom"
+                            Padding="0,5,0,5" />
+
+                    <Button Content="Parse"
+                            Margin="5,5,5,0"
+                            MaxWidth="250"
+                            Command="{Binding ParserFormulaCommand}"
+                            Background="{StaticResource PrimaryColorDark}"
+                            Foreground="White"
+                            VerticalAlignment="Bottom"
+                            Padding="0,5,0,5" />
+
+                </StackPanel>
+
+            </Grid>
+
+            <controls:CustomDataGrid Grid.Row="3"
+                                     Grid.ColumnSpan="3"
+                                     IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}, ConverterParameter='DataGrid'}"
+                                     ItemsSource="{Binding ModelDtos}"
+                                     SelectedItem="{Binding SelectedModel}"
+                                     Margin="10,0,10,10" />
+
+        </Grid>
+        <progressView:ProgressView Visibility="{Binding IsBusy}" />
+    </Grid>
+</Page>

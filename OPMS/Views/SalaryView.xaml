@@ -1,0 +1,302 @@
+﻿<Page x:Class="OPMS.Views.SalaryView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:OPMS.Views"
+      xmlns:progressView="clr-namespace:OPMS.Controls.ProgressView"
+      xmlns:toolbarView="clr-namespace:OPMS.Controls.ToolbarView"
+      xmlns:controls="clr-namespace:OPMS.Controls"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d"
+      xmlns:properties="clr-namespace:OPMS.Properties"
+      d:DesignHeight="720"
+      d:DesignWidth="1024"
+      KeepAlive="True"
+      Title="Salary">
+
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <toolbarView:ToolbarView Grid.Row="0"
+                                     Grid.ColumnSpan="3"
+                                     Title="Salary"
+                                     ButtonState="{Binding Path=DataContext.EditButtonActiveStateModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     EditToolBarInteraction="{Binding Path=DataContext.EditBarInteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     MoreOptionsMenuItemSource="{Binding Path=DataContext.MoreOptionsMenuModels, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     MoreOptionsMenuInteraction="{Binding Path=DataContext.MoreMenuInteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     NavigationInteraction="{Binding Path=DataContext.Navigationlnteraction, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     NavButtonState="{Binding Path=DataContext.NavToolbarButtonActiveStateModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                     NavButtonStateVisibility="{Binding Path=DataContext.NavToolbarButtonVisibilityStateModel, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"/>
+
+            <StackPanel Margin="0,0,0,20"
+                        Grid.Row="1"
+                        IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}">
+                <Label Content="Employee information"
+                       FontSize="20"
+                       Padding="10,0,0,20" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="*"
+                               FontSize="14"
+                               Padding="10,0,0,0"
+                               Foreground="Red"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+                        <Label Content="Employee"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Text="{Binding SelectedEmployee.FirstName}"
+                             Margin="3,0,3,0" />
+
+                    <Button Grid.Column="2"
+                            Command="{Binding SelectEmployeeCommand}"
+                            Content="Select employee" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+
+                        <Label Content="Bank name"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.BankName}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+
+                        <Label Content="Account No."
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.AccountNo}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,20"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}">
+                <Label Content="Salary information"
+                       FontSize="20"
+                       Padding="10,0,0,20" />
+
+                <Grid Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+
+                        <Label Content="Basic"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.BasicSalary}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+
+                        <Label Content="HRA"
+                               FontSize="14" />
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.Hra}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+
+                        <Label FontSize="14">
+                            <TextBlock>
+                                Transport <LineBreak /> allowance
+                            </TextBlock>
+                        </Label>
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.TransportationAllowance}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+
+                        <Label FontSize="14">
+                            <TextBlock>
+                                Learning <LineBreak /> allowance
+                            </TextBlock>
+                        </Label>
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.LearningAllowance}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+
+                        <Label FontSize="14">
+                            <TextBlock>
+                                Commutation <LineBreak /> allowance
+                            </TextBlock>
+                        </Label>
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.CommunicationAllowance}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Margin="0,0,0,20"
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}}">
+                <Label Content=""
+                       FontSize="20"
+                       Padding="10,0,0,20" />
+
+                <Grid Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Style="{StaticResource LabelStackPanel}">
+                        <Label Content="*"
+                               FontSize="14"
+                               Padding="10,0,0,0"
+                               Foreground="Red"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+                        <Label FontSize="14">
+                            <TextBlock>
+                                Salary amount
+                            </TextBlock>
+                        </Label>
+
+                    </StackPanel>
+
+                    <TextBox Grid.Column="1"
+                             Grid.ColumnSpan="2"
+                             Text="{Binding SelectedModel.SalaryAmount}"
+                             Margin="3,0,0,0" />
+
+                </Grid>
+            </StackPanel>
+
+            <controls:CustomDataGrid Grid.Row="3"
+                                     Grid.ColumnSpan="3"
+                                     IsEnabled="{Binding EditButtonActiveStateModel.EditToolbarMode, Converter={StaticResource EditToolbarModeToBoolConverter}, ConverterParameter='DataGrid'}"
+                                     ItemsSource="{Binding ModelDtos}"
+                                     SelectedItem="{Binding SelectedModel}"
+                                     Margin="10,0,10,10" />
+            
+        </Grid>
+        <progressView:ProgressView Visibility="{Binding IsBusy}" />
+    </Grid>
+</Page>
